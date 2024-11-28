@@ -1,4 +1,4 @@
-package org.setHome.setHome.gui;
+package org.setHome.setHome.presentation.gui;
 
 import com.google.inject.Inject;
 import org.bukkit.Bukkit;
@@ -13,20 +13,20 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.persistence.PersistentDataType;
-import org.setHome.setHome.SetHome;
-import org.setHome.setHome.repository.HomeRepository;
+import org.setHome.setHome.Main;
+import org.setHome.setHome.service.HomeService;
 import org.setHome.setHome.model.Home;
 
 public class HomeDetailGUI implements Listener {
 
-    private final HomeRepository homeRepository;
+    private final HomeService homeService;
 
     @Inject
-    public HomeDetailGUI(HomeRepository homeRepository) {
-        this.homeRepository = homeRepository;
+    public HomeDetailGUI(HomeService homeService) {
+        this.homeService = homeService;
     }
 
-    public static void openHomeDetailGUI(Player player, HomeRepository homeRepository, String homeName) {
+    public static void openHomeDetailGUI(Player player, String homeName) {
         Inventory gui = Bukkit.createInventory(null, 27, ChatColor.BLUE + homeName + " 설정");
 
         // 이름 수정 버튼
@@ -58,7 +58,7 @@ public class HomeDetailGUI implements Listener {
         gui.setItem(26, backItem); // 마지막 슬롯
 
         // 홈 이름을 메타 데이터로 저장
-        renameItem.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(SetHome.getInstance(), "homeName"), PersistentDataType.STRING, homeName);
+        renameItem.getItemMeta().getPersistentDataContainer().set(new NamespacedKey(Main.getInstance(), "homeName"), PersistentDataType.STRING, homeName);
 
         player.openInventory(gui);
     }
@@ -82,13 +82,13 @@ public class HomeDetailGUI implements Listener {
             // 이름 수정 로직 (예: 대화창을 통해 새 이름 받기)
             // 여기서는 예시로 이름 변경
             String newName = homeName + "_Renamed";
-            homeRepository.removeHome(player.getUniqueId(), homeName);
-            Home home = homeRepository.getHome(player.getUniqueId(), homeName);
+            homeService.removeHome(player, homeName);
+            Home home = homeService.getHome(player, homeName);
             home.setName(newName);
-            homeRepository.addHome(player.getUniqueId(), home);
+            homeService.addHome(player, home);
             player.sendMessage(ChatColor.GREEN + "집 이름이 변경되었습니다.");
             // 이전 GUI 열기
-            HomesGUI.openHomesGUI(player, homeRepository);
+            HomesGUI.openHomesGUI(player);
         } else if (clickedItem.getType() == Material.ITEM_FRAME) {
             // 아이콘 변경 로직 (예: 다른 아이콘 설정)
             // 여기서는 예시로 아이콘 변경
@@ -96,13 +96,13 @@ public class HomeDetailGUI implements Listener {
             // 실제 아이콘 변경 로직 구현 필요
         } else if (clickedItem.getType() == Material.BARRIER) {
             // 집 삭제 로직
-            homeRepository.removeHome(player.getUniqueId(), homeName);
+            homeService.removeHome(player, homeName);
             player.sendMessage(ChatColor.RED + homeName + " 집이 삭제되었습니다.");
             // 이전 GUI 열기
-            HomesGUI.openHomesGUI(player, homeRepository);
+            HomesGUI.openHomesGUI(player);
         } else if (clickedItem.getType() == Material.ARROW) {
             // 이전 GUI 열기
-            HomesGUI.openHomesGUI(player, homeRepository);
+            HomesGUI.openHomesGUI(player);
         }
     }
 }

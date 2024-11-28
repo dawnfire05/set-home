@@ -2,21 +2,20 @@ package org.setHome.setHome;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import org.bukkit.command.Command;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.setHome.setHome.command.CommandHandler;
-import org.setHome.setHome.di.Module;
-import org.setHome.setHome.gui.HomeDetailGUI;
-import org.setHome.setHome.gui.HomesGUI;
+import org.setHome.setHome.presentation.command.CommandHandler;
+import org.setHome.setHome.presentation.gui.HomeDetailGUI;
+import org.setHome.setHome.presentation.gui.HomesGUI;
 import org.setHome.setHome.repository.HomeRepository;
+import org.setHome.setHome.service.HomeService;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public final class SetHome extends JavaPlugin {
+public final class Main extends JavaPlugin {
 
-    private static SetHome instance;
+    private static Main instance;
     private Connection connection;
     private Injector injector;
 
@@ -27,16 +26,14 @@ public final class SetHome extends JavaPlugin {
         setupInjector();
 
         try {
-            // 의존성 주입을 통해 HomeRepository, HomeCommand, HomesGUI, HomeDetailGUI 가져오기
+            HomeService homeService = injector.getInstance(HomeService.class);
             HomeRepository homeRepository = injector.getInstance(HomeRepository.class);
             CommandHandler commandHandler = injector.getInstance(CommandHandler.class);
             HomesGUI homesGUI = injector.getInstance(HomesGUI.class);
             HomeDetailGUI homeDetailGUI = injector.getInstance(HomeDetailGUI.class);
 
-            // 명령어 실행자 등록
             getCommand("homes").setExecutor(commandHandler);
 
-            // 이벤트 리스너 등록
             getServer().getPluginManager().registerEvents(homesGUI, this);
             getServer().getPluginManager().registerEvents(homeDetailGUI, this);
 
@@ -93,7 +90,7 @@ public final class SetHome extends JavaPlugin {
         return injector;
     }
 
-    public static SetHome getInstance() {
+    public static Main getInstance() {
         return instance;
     }
 

@@ -16,7 +16,7 @@ public class HomeRepositoryImpl implements HomeRepository {
     private final Connection connection;
 
     public HomeRepositoryImpl() throws SQLException {
-        this.connection = SetHome.getInstance().getDatabaseConnection();
+        this.connection = Main.getInstance().getDatabaseConnection();
         createTables();
     }
 
@@ -46,8 +46,6 @@ public class HomeRepositoryImpl implements HomeRepository {
             while (rs.next()) {
                 String homeName = rs.getString("home_name");
                 String world = rs.getString("world");
-                String icon = rs.getString("icon");
-
                 double x = rs.getDouble("x");
                 double y = rs.getDouble("y");
                 double z = rs.getDouble("z");

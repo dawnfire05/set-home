@@ -3,15 +3,16 @@ package org.setHome.setHome.service;
 
 import org.bukkit.entity.Player;
 import org.setHome.setHome.model.Home;
+import org.setHome.setHome.repository.HomeRepository;
 
 import java.util.*;
 
 public class HomeServiceImpl implements HomeService {
 
-    private Map<UUID, List<Home>> playerHomes = new HashMap<>();
+    private final HomeRepository homeRepository;
 
-    public HomeServiceImpl() {
-        loadHomes();
+    HomeServiceImpl(HomeRepository homeRepository) {
+        this.homeRepository = homeRepository;
     }
 
     @Override
@@ -21,7 +22,19 @@ public class HomeServiceImpl implements HomeService {
 
     @Override
     public void addHome(Player player, Home home) {
-        playerHomes.computeIfAbsent(player.getUniqueId(), k -> new ArrayList<>()).add(home);
+        if(home.getName() != null){
+            homeRepository.addHome(player.getUniqueId(), home);
+        } else{
+            home.setName("Home" + homeRepository.getHomes(player.getUniqueId()).size()+1);
+            homeRepository.addHome(player.getUniqueId(), home);
+        }
+    }
+
+
+
+    @Override
+    public void updateHome(Player player, Home home) {
+
     }
 
     @Override

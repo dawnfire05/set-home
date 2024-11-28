@@ -1,12 +1,12 @@
 // CommandHandler.java
-package org.setHome.setHome.command;
+package org.setHome.setHome.presentation.command;
 
 import com.google.inject.Inject;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.setHome.setHome.gui.HomesGUI;
+import org.setHome.setHome.presentation.gui.HomesGUI;
 
 public class CommandHandler implements CommandExecutor {
 
