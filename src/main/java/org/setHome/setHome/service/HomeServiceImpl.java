@@ -24,9 +24,13 @@ public class HomeServiceImpl implements HomeService {
 
     @Override
     public void addHome(Player player, Home home) {
-        // 집이 이미 있는지 확인하는 로직 필요.
         if(home.getName() != null){
-            homeRepository.addHome(player.getUniqueId(), home);
+            if(homeRepository.isHomeNameTaken(player.getUniqueId(), home.getName())){
+                player.sendMessage("이 이름은 이미 사용되고 있습니다.");
+                return;
+            }else{
+                homeRepository.addHome(player.getUniqueId(), home);
+            }
         } else{
             home.setName("Home" + homeRepository.getHomes(player.getUniqueId()).size()+1);
             homeRepository.addHome(player.getUniqueId(), home);
