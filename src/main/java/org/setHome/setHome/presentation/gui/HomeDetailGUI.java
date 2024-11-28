@@ -82,12 +82,9 @@ public class HomeDetailGUI implements Listener {
             // 이름 수정 로직 (예: 대화창을 통해 새 이름 받기)
             // 여기서는 예시로 이름 변경
             String newName = homeName + "_Renamed";
-            homeService.removeHome(player, homeName);
             Home home = homeService.getHome(player, homeName);
-            home.setName(newName);
-            homeService.updateHome(player, home);
+            homeService.updateHome(player, home, newName);
             player.sendMessage(ChatColor.GREEN + "집 이름이 변경되었습니다.");
-            // 이전 GUI 열기
             HomesGUI.openHomesGUI(player);
         } else if (clickedItem.getType() == Material.ITEM_FRAME) {
             // 아이콘 변경 로직 (예: 다른 아이콘 설정)

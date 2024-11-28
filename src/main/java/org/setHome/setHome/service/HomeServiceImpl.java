@@ -8,8 +8,6 @@ import org.setHome.setHome.repository.HomeRepository;
 
 import java.util.*;
 
-import static org.bukkit.Bukkit.getLogger;
-
 public class HomeServiceImpl implements HomeService {
 
     private final HomeRepository homeRepository;
@@ -38,24 +36,18 @@ public class HomeServiceImpl implements HomeService {
 
 
     @Override
-    public void updateHome(Player player, Home home) {
-
+    public void updateHome(Player player, Home home, String newName) {
+        homeRepository.updateName(player.getUniqueId(), home, newName);
     }
 
     @Override
     public void removeHome(Player player, String homeName) {
-        List<Home> homes = getHomes(player);
-        homes.removeIf(home -> home.getName().equalsIgnoreCase(homeName));
+        homeRepository.removeHome(player.getUniqueId(), homeName);
     }
 
     @Override
     public Home getHome(Player player, String homeName) {
-        for (Home home : getHomes(player)) {
-            if (home.getName().equalsIgnoreCase(homeName)) {
-                return home;
-            }
-        }
-        return null;
+        return homeRepository.getHome(player.getUniqueId(), homeName);
     }
 
 }

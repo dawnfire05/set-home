@@ -3,8 +3,6 @@ package org.setHome.setHome.repository;
 import com.google.inject.Inject;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
-import org.setHome.setHome.*;
 import org.setHome.setHome.model.Home;
 
 import java.sql.*;
@@ -70,6 +68,19 @@ public class HomeRepositoryImpl implements HomeRepository {
             pstmt.setDouble(4, home.getLocation().getX());
             pstmt.setDouble(5, home.getLocation().getY());
             pstmt.setDouble(6, home.getLocation().getZ());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void updateName(UUID playerUUID, Home home, String newName) {
+        String updateSQL = "UPDATE homes SET home_name = ? WHERE player_uuid = ? AND home_name = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(updateSQL)){
+            pstmt.setString(1, newName);
+            pstmt.setString(2, playerUUID.toString());
+            pstmt.setString(3, home.getName());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

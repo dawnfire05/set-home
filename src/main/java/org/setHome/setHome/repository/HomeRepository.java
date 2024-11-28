@@ -8,6 +8,7 @@ import java.util.UUID;
 public interface HomeRepository {
     List<Home> getHomes(UUID playerUUID);
     void addHome(UUID playerUUID, Home home);
+    void updateName(UUID playerUUID, Home home, String newName);
     void removeHome(UUID playerUUID, String homeName);
     Home getHome(UUID playerUUID, String homeName);
     boolean isHomeNameTaken(UUID playerUUID, String homeName);
