@@ -7,12 +7,12 @@ import org.bukkit.Material;
 public class Home {
     private String name;
     private Location location;
-    private Material icon;
+//    private Material icon;
 
-    public Home(String name, Location location, Material icon) {
+    public Home(String name, Location location) {
         this.name = name;
         this.location = location;
-        this.icon = icon;
+//        this.icon = icon;
     }
 
     // 게터와 세터 메서드들
@@ -24,9 +24,9 @@ public class Home {
         return location;
     }
 
-    public Material getIcon() {
-        return icon;
-    }
+//    public Material getIcon() {
+//        return icon;
+//    }
 
     public void setName(String name) {
         this.name = name;
@@ -36,7 +36,7 @@ public class Home {
         this.location = location;
     }
 
-    public void setIcon(Material icon) {
-        this.icon = icon;
-    }
+//    public void setIcon(Material icon) {
+//        this.icon = icon;
+//    }
 }
