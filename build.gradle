@@ -19,6 +19,11 @@ repositories {
 
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.20.1-R0.1-SNAPSHOT")
+
+    implementation 'org.xerial:sqlite-jdbc:3.40.0.0'
+
+    implementation 'com.google.inject:guice:5.1.0'
+
 }
 
 def targetJavaVersion = 17

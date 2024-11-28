@@ -1,7 +1,7 @@
 name: set-home
 version: '1.0-SNAPSHOT'
-main: org.quest.setHome.SetHome
-api-version: '1.20'
+main: org.setHome.setHome.SetHome
+api-version: '1.21'
 commands:
   homes:
     description: 집 관리 GUI를 엽니다.
