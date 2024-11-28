@@ -12,6 +12,4 @@ public interface HomeService {
     void updateHome(Player player, Home home);
     void removeHome(Player player, String homeName);
     Home getHome(Player player, String homeName);
-    void saveHomes();
-    void loadHomes();
 }

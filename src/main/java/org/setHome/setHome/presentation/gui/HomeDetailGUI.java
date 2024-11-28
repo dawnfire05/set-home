@@ -85,7 +85,7 @@ public class HomeDetailGUI implements Listener {
             homeService.removeHome(player, homeName);
             Home home = homeService.getHome(player, homeName);
             home.setName(newName);
-            homeService.addHome(player, home);
+            homeService.updateHome(player, home);
             player.sendMessage(ChatColor.GREEN + "집 이름이 변경되었습니다.");
             // 이전 GUI 열기
             HomesGUI.openHomesGUI(player);

@@ -41,7 +41,7 @@ public class HomesGUI implements Listener {
         ItemMeta addMeta = addHomeItem.getItemMeta();
         addMeta.setDisplayName(ChatColor.YELLOW + "현재 위치에 집 추가");
         addHomeItem.setItemMeta(addMeta);
-        gui.setItem(53, addHomeItem); // 마지막 슬롯
+        gui.setItem(49, addHomeItem); // 마지막 슬롯
 
         player.openInventory(gui);
     }
@@ -74,9 +74,10 @@ public class HomesGUI implements Listener {
             }
         } else if (clickedItem.getType() == Material.ANVIL) {
             if (event.isLeftClick()) {
-                Home home = new Home("Home" + (homeService.getHomes(player).size() + 1),player.getLocation());
+                Home home = new Home("Home" + (homeService.getHomes(player).size() + 1), player.getLocation());
                 // 집 이름, 아이콘 설정하는 로직
                 homeService.addHome(player, home);
+                openHomesGUI(player);
 //                String homeName = "Home" + (homeService.getHomes(player.getUniqueId()).size() + 1);
 //                if (!homeService.isHomeNameTaken(player.getUniqueId(), homeName)) {
 //                    Home newHome = new Home(homeName, player.getLocation());
@@ -90,6 +91,7 @@ public class HomesGUI implements Listener {
             } else if (event.isRightClick()) {
                 Home home = new Home("Home" + (homeService.getHomes(player).size() + 1),player.getLocation());
                 homeService.addHome(player, home);
+                openHomesGUI(player);
 //                // 빠르게 집 생성하는 로직 (예: 현재 위치에 자동 집 생성)
 //                String homeName = "FastHome" + (homeService.getHomes(player.getUniqueId()).size() + 1);
 //                if (!homeService.isHomeNameTaken(player.getUniqueId(), homeName)) {

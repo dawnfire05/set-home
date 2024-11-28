@@ -1,5 +1,6 @@
 package org.setHome.setHome.repository;
 
+import com.google.inject.Inject;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -15,8 +16,9 @@ public class HomeRepositoryImpl implements HomeRepository {
 
     private final Connection connection;
 
-    public HomeRepositoryImpl() throws SQLException {
-        this.connection = Main.getInstance().getDatabaseConnection();
+    @Inject
+    public HomeRepositoryImpl(Connection connection) throws SQLException {
+        this.connection = connection;
         createTables();
     }
 

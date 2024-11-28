@@ -1,8 +1,9 @@
 plugins {
     id 'java'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
-group = 'org.quest'
+group = 'org.setHome'
 version = '1.0-SNAPSHOT'
 
 repositories {
@@ -25,6 +26,13 @@ dependencies {
     implementation 'com.google.inject:guice:5.1.0'
 
 }
+
+shadowJar {
+    relocate 'com.google.inject', 'org.setHome.lib.com.google.inject'
+    relocate 'javax.inject', 'org.setHome.lib.javax.inject'
+}
+
+tasks.build.dependsOn shadowJar
 
 def targetJavaVersion = 17
 java {

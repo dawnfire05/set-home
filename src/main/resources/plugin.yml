@@ -1,6 +1,6 @@
 name: set-home
 version: '1.0-SNAPSHOT'
-main: org.setHome.setHome.SetHome
+main: org.setHome.setHome.Main
 api-version: '1.21'
 commands:
   homes:

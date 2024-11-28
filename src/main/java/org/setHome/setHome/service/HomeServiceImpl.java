@@ -1,35 +1,40 @@
 // HomeServiceImpl.java
 package org.setHome.setHome.service;
 
+import com.google.inject.Inject;
 import org.bukkit.entity.Player;
 import org.setHome.setHome.model.Home;
 import org.setHome.setHome.repository.HomeRepository;
 
 import java.util.*;
 
+import static org.bukkit.Bukkit.getLogger;
+
 public class HomeServiceImpl implements HomeService {
 
     private final HomeRepository homeRepository;
 
+    @Inject
     HomeServiceImpl(HomeRepository homeRepository) {
         this.homeRepository = homeRepository;
     }
 
     @Override
     public List<Home> getHomes(Player player) {
-        return playerHomes.getOrDefault(player.getUniqueId(), new ArrayList<>());
+        return homeRepository.getHomes(player.getUniqueId());
     }
 
     @Override
     public void addHome(Player player, Home home) {
+        // 집이 이미 있는지 확인하는 로직 필요.
         if(home.getName() != null){
             homeRepository.addHome(player.getUniqueId(), home);
         } else{
             home.setName("Home" + homeRepository.getHomes(player.getUniqueId()).size()+1);
             homeRepository.addHome(player.getUniqueId(), home);
         }
+        player.sendMessage("집이 저장되었습니다.");
     }
-
 
 
     @Override
@@ -53,13 +58,4 @@ public class HomeServiceImpl implements HomeService {
         return null;
     }
 
-    @Override
-    public void saveHomes() {
-        // 파일 또는 데이터베이스에 집 정보를 저장하는 로직
-    }
-
-    @Override
-    public void loadHomes() {
-        // 파일 또는 데이터베이스에서 집 정보를 불러오는 로직
-    }
 }

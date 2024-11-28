@@ -84,7 +84,11 @@ public final class Main extends JavaPlugin {
     }
 
     private void setupInjector() {
-        injector = Guice.createInjector(new Module(connection));
+        try {
+            injector = Guice.createInjector(new Module(connection));
+        } catch (Exception e) {
+            getLogger().warning(e.getMessage());
+        }
     }
     public Injector getInjector() {
         return injector;
