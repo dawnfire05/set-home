@@ -90,16 +90,9 @@ public final class Main extends JavaPlugin {
             getLogger().warning(e.getMessage());
         }
     }
-    public Injector getInjector() {
-        return injector;
-    }
 
     public static Main getInstance() {
         return instance;
-    }
-
-    public Connection getDatabaseConnection() {
-        return connection;
     }
 
 }
